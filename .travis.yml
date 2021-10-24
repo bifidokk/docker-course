@@ -4,12 +4,15 @@ services:
   - docker
 
 before_install:
+  - cd ./complex
   - docker build -f ./client/Dockerfile.dev -t bifidokk/docker-course-client-test ./client
 
 script:
+  - cd ./complex
   - docker run -e CI=true bifidokk/docker-course-client-test npm test
 
 after_success:
+  - cd ./complex
   - docker build -t bifidokk/multi-client ./client
   - docker build -t bifidokk/multi-nginx ./nginx
   - docker build -t bifidokk/multi-server ./server
