@@ -1,0 +1,16 @@
+sudo: required
+language: generic
+services:
+  - docker
+
+before_install:
+  - docker build -f ./client/Dockerfile.dev -t bifidokk/docker-course-client-test ./client
+
+script:
+  - docker run -e CI=true bifidokk/docker-course-client-test npm test
+
+after_success:
+  - docker build -t bifidokk/multi-client ./client
+  - docker build -t bifidokk/multi-nginx ./nginx
+  - docker build -t bifidokk/multi-server ./server
+  - docker build -t bifidokk/multi-worker ./worker
