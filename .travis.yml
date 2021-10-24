@@ -15,3 +15,8 @@ after_success:
   - docker build -t bifidokk/multi-nginx ./nginx
   - docker build -t bifidokk/multi-server ./server
   - docker build -t bifidokk/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push bifidokk/multi-client
+  - docker push bifidokk/multi-nginx
+  - docker push bifidokk/multi-server
+  - docker push bifidokk/multi-worker
